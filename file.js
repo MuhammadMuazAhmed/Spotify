@@ -36,7 +36,7 @@ const playMusic = (track, pause = false) => {
   currentsong.src = `${curfolder}${track}`;
   if (!pause) {
     currentsong.play();
-    play.src = "pause.svg";
+    play.src = "./svgs/pause.svg";
   }
   document.querySelector(".songinfo").innerHTML = decodeURI(track);
   document.querySelector(".songtime").innerHTML = "00:00/00:00";
@@ -51,14 +51,14 @@ async function loadSongsAndDisplay(folder) {
   for (const song of songs) {
     songUL.innerHTML += `
       <li>
-        <img class="invert" src="music.svg" alt="music" />
+        <img class="invert" src="./svgs/music.svg" alt="music" />
         <div class="info">
           <div>${song.replaceAll("%20", " ")}</div>
           <div>MUAZ</div>
         </div>
         <div class="playnow">
           <span>Playnow</span>
-          <img class="invert" src="play.svg"/>
+          <img class="invert" src="./svgs/play.svg"/>
         </div>
       </li>`;
   }
@@ -79,10 +79,10 @@ async function main() {
   document.getElementById("play").addEventListener("click", () => {
     if (currentsong.paused) {
       currentsong.play();
-      play.src = "pause.svg";
+      play.src = "./svgs/pause.svg";
     } else {
       currentsong.pause();
-      play.src = "play.svg";
+      play.src = "./svgs/play.svg";
     }
   });
 
@@ -135,24 +135,30 @@ async function main() {
     if (currentsong.volume > 0) {
       document.querySelector(".volume>img").src = document
         .querySelector(".volume>img")
-        .src.replace("mute.svg", "volume.svg");
+        .src.replace("./svgs/mute.svg", "./svgs/volume.svg");
     }
   });
 
   document.querySelector(".volume>img").addEventListener("click", (e) => {
-    if (e.target.src.includes("volume.svg")) {
-      e.target.src = e.target.src.replace("volume.svg", "mute.svg");
+    if (e.target.src.includes("./svgs/volume.svg")) {
+      e.target.src = e.target.src.replace(
+        "./svgs/volume.svg",
+        "./svgs/mute.svg"
+      );
       currentsong.volume = 0;
       document.querySelector(".range input").value = 0;
     } else {
-      e.target.src = e.target.src.replace("mute.svg", "volume.svg");
+      e.target.src = e.target.src.replace(
+        "./svgs/mute.svg",
+        "./svgs/volume.svg"
+      );
       currentsong.volume = 0.1;
       document.querySelector(".range input").value = 10;
     }
   });
   Array.from(document.getElementsByClassName("card")).forEach((card) => {
     card.addEventListener("click", async (item) => {
-      play.src = "play.svg";
+      play.src = "./svgs/play.svg";
       document.querySelector(".circle").style.left = 0;
       await loadSongsAndDisplay(`songs/${item.currentTarget.dataset.folder}`);
     });
